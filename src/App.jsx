@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, useSpring, useMotionValue, AnimatePresence } from 'framer-motion';
 import Lenis from '@studio-freight/lenis';
 import { 
-  ArrowRight, ArrowUpRight, Instagram, Twitter, Dribbble, Sparkles, Code2, CheckCircle2, Star
+  ArrowRight, ArrowUpRight, Instagram, Twitter, Dribbble, Menu, X
 } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { PROJECTS, SERVICES, SKILLS } from './data';
@@ -17,27 +17,26 @@ const openWA = (msg) => window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURI
 const Preloader = ({ onComplete }) => {
   return (
     <motion.div
-      className="fixed inset-0 z-[99999] flex items-center justify-center bg-[#FAFAFA]"
+      className="fixed inset-0 z-[99999] flex items-center justify-center bg-[#050505]"
       initial={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 0.8 }}
+      transition={{ duration: 1, ease: "easeInOut" }}
     >
       <div className="overflow-hidden relative">
         <motion.h1
-          className="text-4xl md:text-8xl font-black text-[#171717] tracking-tighter text-center"
-          initial={{ y: 100 }}
-          animate={{ y: 0 }}
-          transition={{ duration: 0.8, ease: "circOut" }}
+          className="text-3xl md:text-6xl text-[#D4AF37] tracking-widest text-center italic"
+          initial={{ y: 50, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 1, ease: "easeOut" }}
           onAnimationComplete={() => setTimeout(onComplete, 1500)}
         >
-          ALEXANDER <span className="text-yellow-500">VOSS</span>
+          Alexander Voss
         </motion.h1>
       </div>
     </motion.div>
   );
 };
 
-// Tombol Magnet: Memberikan feedback fisik ke user (Dopamine hit)
 const MagneticButton = ({ children, className, onClick }) => {
   const ref = useRef(null);
   const x = useMotionValue(0);
@@ -71,35 +70,6 @@ const MagneticButton = ({ children, className, onClick }) => {
   );
 };
 
-const Cursor = () => {
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-  const [isHovering, setIsHovering] = useState(false);
-
-  useEffect(() => {
-    const move = (e) => setMousePos({ x: e.clientX, y: e.clientY });
-    const hoverStart = (e) => { if(e.target.closest('button, a, .hover-target')) setIsHovering(true); };
-    const hoverEnd = (e) => { if(!e.target.closest('button, a, .hover-target')) setIsHovering(false); };
-    window.addEventListener('mousemove', move);
-    window.addEventListener('mouseover', hoverStart);
-    window.addEventListener('mouseout', hoverEnd);
-    return () => { window.removeEventListener('mousemove', move); window.removeEventListener('mouseover', hoverStart); };
-  }, []);
-
-  return (
-    <motion.div
-      className="fixed top-0 left-0 w-4 h-4 bg-yellow-400 rounded-full pointer-events-none z-[9999] hidden md:block mix-blend-multiply"
-      animate={{ 
-        x: mousePos.x - (isHovering ? 32 : 8), 
-        y: mousePos.y - (isHovering ? 32 : 8),
-        width: isHovering ? 64 : 16,
-        height: isHovering ? 64 : 16,
-        opacity: isHovering ? 0.8 : 1
-      }}
-      transition={{ type: "spring", stiffness: 150, damping: 15 }}
-    />
-  );
-};
-
 const Navbar = () => {
   const scrollTo = (id) => {
     const element = document.getElementById(id);
@@ -107,74 +77,62 @@ const Navbar = () => {
   };
 
   return (
-    <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 flex gap-1 p-2 bg-white/90 backdrop-blur-md border border-black/5 shadow-2xl rounded-full hover-target">
-      {['Hero', 'Work', 'Services', 'About', 'Contact'].map((item) => (
-        <button 
-          key={item} 
-          onClick={() => scrollTo(item.toLowerCase())}
-          className="px-5 py-2.5 rounded-full text-xs md:text-sm font-bold text-neutral-500 hover:bg-yellow-400 hover:text-black transition-all uppercase tracking-wider"
-        >
-          {item}
-        </button>
-      ))}
-    </div>
+    <motion.nav 
+      initial={{ y: -100 }} animate={{ y: 0 }} transition={{ duration: 0.8, ease: "easeOut" }}
+      className="fixed top-0 left-0 w-full z-50 px-6 py-6 flex justify-between items-center mix-blend-difference text-white"
+    >
+      <span className="font-serif-display text-xl italic tracking-wide">AV.</span>
+      <div className="hidden md:flex gap-8">
+        {['Work', 'Services', 'About', 'Contact'].map((item) => (
+          <button 
+            key={item} 
+            onClick={() => scrollTo(item.toLowerCase())}
+            className="text-xs font-light tracking-[0.2em] uppercase hover:text-[#D4AF37] transition-colors"
+          >
+            {item}
+          </button>
+        ))}
+      </div>
+      <button onClick={() => openWA("Halo, saya ingin diskusi project")} className="text-xs font-bold border-b border-white pb-1 hover:border-[#D4AF37] hover:text-[#D4AF37] transition-all">
+        START PROJECT
+      </button>
+    </motion.nav>
   );
 };
 
 // --- SECTIONS ---
 
 const Hero = () => {
-  const scrollToWork = () => {
-    document.getElementById('work')?.scrollIntoView({ behavior: 'smooth' });
-  };
-
   return (
-    <section id="hero" className="min-h-[95vh] flex flex-col justify-center px-6 pt-32 pb-20 md:py-0 relative container mx-auto">
+    <section id="hero" className="min-h-screen flex flex-col justify-center items-center px-6 relative container mx-auto text-center">
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] h-[80vw] bg-[#D4AF37] opacity-[0.03] blur-[150px] rounded-full pointer-events-none" />
+
       <motion.div 
-        initial={{ opacity: 0, y: 50 }}
+        initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, ease: [0.76, 0, 0.24, 1] }}
-        className="z-10 relative"
+        transition={{ duration: 1.2, ease: "easeOut" }}
+        className="z-10 max-w-4xl mx-auto"
       >
-        {/* SOCIAL PROOF: Status Bar */}
-        <div className="inline-flex items-center gap-3 mb-8 p-2 pr-5 bg-white border border-neutral-100 rounded-full shadow-sm">
-          <div className="w-2.5 h-2.5 bg-yellow-400 rounded-full animate-pulse ml-2" />
-          <span className="font-mono text-xs font-bold tracking-widest text-neutral-500 uppercase">Siap Menerima Order</span>
-        </div>
-        
-        {/* HEADLINE: Menggunakan font besar untuk 'Authority' */}
-        <h1 className="text-[13vw] md:text-[10vw] leading-[0.9] font-black font-display tracking-tighter text-[#171717] mb-8">
-          SPESIALIS <br/>
-          <span className="text-neutral-300">VISUAL BRAND.</span>
+        <p className="text-[#D4AF37] text-xs md:text-sm font-medium tracking-[0.3em] uppercase mb-6 md:mb-10">
+          Est. 2026 — Padang, Indonesia
+        </p>
+
+        <h1 className="text-[13vw] md:text-[8vw] leading-[1.1] md:leading-[1] font-serif-display font-medium text-white mb-8">
+          Visual Brand <br/> 
+          <span className="text-white/40 italic">Specialist.</span>
         </h1>
         
-        {/* VALUE PROPOSITION: Menjelaskan manfaat, bukan fitur */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end border-t border-neutral-200 pt-8 mt-4 md:mt-12">
-          <div className="text-lg md:text-2xl max-w-xl leading-relaxed text-neutral-600 mb-10 md:mb-0">
-            <p className="mb-6">
-              Membantu bisnis terlihat <span className="text-black font-semibold">Mahal & Terpercaya</span> lewat visual yang strategis.
-            </p>
-            <div className="flex flex-col gap-2">
-               <div className="flex items-center gap-2">
-                 <div className="w-1.5 h-1.5 bg-yellow-400 rounded-full"/>
-                 <span>Social Media (Feed & Story)</span>
-               </div>
-               <div className="flex items-center gap-2">
-                 <div className="w-1.5 h-1.5 bg-yellow-400 rounded-full"/>
-                 <span>Vehicle Livery (Branding)</span>
-               </div>
-               <div className="flex items-center gap-2">
-                 <div className="w-1.5 h-1.5 bg-yellow-400 rounded-full"/>
-                 <span>Digital Banner & Ads</span>
-               </div>
-            </div>
-          </div>
-          
+        <p className="text-sm md:text-lg text-neutral-400 max-w-xl mx-auto leading-relaxed font-light mb-12">
+          Saya menciptakan identitas visual yang <span className="text-white">berkelas</span>. 
+          Fokus pada Social Media, Livery Kendaraan, dan Digital Banner yang menaikkan nilai brand Anda.
+        </p>
+        
+        <div className="flex flex-col md:flex-row justify-center items-center gap-6">
           <MagneticButton 
-            className="w-full md:w-auto px-10 py-5 bg-yellow-400 text-black rounded-full font-bold text-lg flex justify-center items-center gap-3 shadow-[0_10px_20px_rgba(250,204,21,0.3)] hover:shadow-yellow-400/50 transition-all hover-target"
-            onClick={scrollToWork}
+            className="px-8 py-4 border border-white/20 rounded-full text-white text-sm tracking-widest uppercase hover:bg-white hover:text-black transition-all duration-500"
+            onClick={() => document.getElementById('work')?.scrollIntoView({ behavior: 'smooth' })}
           >
-            Lihat Portfolio <ArrowRight size={20} />
+            Lihat Semua Karya
           </MagneticButton>
         </div>
       </motion.div>
@@ -182,58 +140,61 @@ const Hero = () => {
   );
 };
 
+// --- BAGIAN WORK: INFINITE SLIDER (MARQUEE) ---
 const Work = () => {
+  // Kita duplikasi array PROJECTS 3x biar loopingnya mulus banget tanpa putus
+  const infiniteProjects = [...PROJECTS, ...PROJECTS, ...PROJECTS];
+
   return (
-    <section id="work" className="py-24 md:py-32 px-6 container mx-auto">
-      <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-4">
-        <h2 className="text-5xl md:text-8xl font-black tracking-tighter text-[#171717]">SELECTED<br/><span className="text-neutral-300">WORK</span></h2>
-        <p className="text-neutral-500 max-w-sm text-right md:text-left">
-          Setiap proyek dikerjakan dengan riset warna dan komposisi untuk hasil maksimal.
-        </p>
+    <section id="work" className="py-24 md:py-32 overflow-hidden bg-[#050505]">
+      <div className="container mx-auto px-6 mb-16 flex justify-between items-end">
+        <div>
+          <h2 className="text-4xl md:text-6xl text-white font-serif-display mb-2">Selected Works</h2>
+          <p className="text-neutral-500 text-sm tracking-widest uppercase">Geser untuk melihat (Auto-scroll)</p>
+        </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
-        {PROJECTS.map((project, i) => (
-          <motion.div 
-            key={project.id}
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-10%" }}
-            transition={{ duration: 0.8 }}
-            className={`group cursor-pointer hover-target ${project.orientation === 'landscape' ? 'md:col-span-2' : 'md:col-span-1'}`}
-          >
-            {/* Kartu Proyek Clean dengan Rounded Corner Besar (Friendly) */}
-            <div className={`relative w-full overflow-hidden rounded-[2rem] border border-neutral-100 shadow-sm group-hover:shadow-2xl group-hover:shadow-black/5 transition-all duration-700
-              ${project.orientation === 'landscape' ? 'aspect-[16/9] md:aspect-[2.35/1]' : 'aspect-[4/5]'}
-            `}>
-              {/* Overlay Kuning saat Hover */}
-              <div className="absolute inset-0 bg-yellow-400/0 group-hover:bg-yellow-400/10 z-10 transition-colors duration-500 mix-blend-multiply pointer-events-none" />
+      {/* CONTAINER SLIDER */}
+      <div className="relative w-full">
+        <motion.div 
+          className="flex gap-8 w-max"
+          // Animasi jalan terus (Linear Loop)
+          animate={{ x: ["0%", "-50%"] }} 
+          transition={{ 
+            repeat: Infinity, 
+            ease: "linear", 
+            duration: 30 // Kecepatan (makin besar makin pelan)
+          }}
+          // Pause pas di hover
+          whileHover={{ animationPlayState: "paused" }} 
+        >
+          {infiniteProjects.map((project, index) => (
+            <div 
+              key={index} 
+              className="relative w-[300px] md:w-[450px] group cursor-pointer flex-shrink-0"
+            >
+              {/* Gambar */}
+              <div className="relative aspect-[4/5] md:aspect-[16/9] overflow-hidden bg-[#111] mb-4">
+                <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-all duration-500 z-10" />
+                <img 
+                  src={project.image} 
+                  alt={project.title} 
+                  className="w-full h-full object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-110 opacity-80 group-hover:opacity-100" 
+                />
+              </div>
               
-              <img 
-                src={project.image} 
-                alt={project.title} 
-                className="w-full h-full object-cover transition-transform duration-[1.5s] ease-[0.25,1,0.5,1] group-hover:scale-105" 
-              />
-              
-              {/* Label Floating */}
-              <div className="absolute top-6 left-6 z-20">
-                <span className="px-4 py-2 bg-white/90 backdrop-blur-md text-xs font-bold uppercase tracking-widest rounded-full shadow-sm">
-                  {project.category}
-                </span>
+              {/* Keterangan */}
+              <div className="border-l border-[#D4AF37] pl-4">
+                 <h3 className="text-xl md:text-2xl text-white font-serif-display italic">{project.title}</h3>
+                 <span className="text-neutral-500 text-xs tracking-widest uppercase block mt-1">{project.category}</span>
               </div>
             </div>
-            
-            <div className="flex justify-between items-center mt-6 px-2">
-               <div>
-                 <h3 className="text-2xl md:text-3xl font-bold text-[#171717] group-hover:text-yellow-600 transition-colors">{project.title}</h3>
-                 <span className="text-neutral-400 font-mono text-sm">{project.year}</span>
-               </div>
-               <div className="w-12 h-12 rounded-full border border-neutral-200 flex items-center justify-center group-hover:bg-yellow-400 group-hover:border-yellow-400 transition-all">
-                  <ArrowUpRight size={20} />
-               </div>
-            </div>
-          </motion.div>
-        ))}
+          ))}
+        </motion.div>
+        
+        {/* Gradient Fade Kiri Kanan (Biar alusnya dapet) */}
+        <div className="absolute top-0 left-0 w-20 h-full bg-gradient-to-r from-[#050505] to-transparent z-20 pointer-events-none" />
+        <div className="absolute top-0 right-0 w-20 h-full bg-gradient-to-l from-[#050505] to-transparent z-20 pointer-events-none" />
       </div>
     </section>
   );
@@ -242,46 +203,41 @@ const Work = () => {
 const Services = () => {
   return (
     <section id="services" className="py-24 md:py-32 px-6 container mx-auto">
-      <div className="mb-20">
-        <h2 className="text-sm font-mono tracking-widest text-neutral-500 mb-4 uppercase">Services</h2>
-        <h3 className="text-4xl md:text-7xl font-bold leading-tight text-[#171717]">
-          Kualitas Agensi.<br/>
-          <span className="text-neutral-300">Harga Teman.</span>
-        </h3>
-      </div>
-
-      <div className="grid gap-6">
-        {SERVICES.map((s, i) => (
-          <motion.div 
-            key={i}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="group relative p-8 md:p-12 glass-panel rounded-[2rem] hover:border-yellow-400/50 transition-all duration-500"
-          >
-            <div className="flex flex-col md:flex-row justify-between md:items-center gap-8 relative z-10">
-              <div className="md:w-1/3">
-                <div className="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center mb-4 text-yellow-600">
-                   <Star size={24} fill="currentColor" />
+      <div className="grid md:grid-cols-12 gap-12">
+        <div className="md:col-span-4">
+           <span className="text-[#D4AF37] text-xs tracking-[0.2em] uppercase block mb-4">Expertise</span>
+           <h2 className="text-4xl md:text-5xl text-white leading-tight font-serif-display">
+             Premium Services <br/> for Your Brand.
+           </h2>
+        </div>
+        
+        <div className="md:col-span-8 grid gap-8">
+          {SERVICES.map((s, i) => (
+            <motion.div 
+              key={i}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="group border-t border-white/10 py-10 hover:border-[#D4AF37]/50 transition-colors"
+            >
+              <div className="flex flex-col md:flex-row justify-between md:items-center gap-6">
+                <div className="md:w-1/2">
+                  <h4 className="text-2xl md:text-3xl text-white font-serif-display mb-2">{s.title}</h4>
+                  <p className="text-neutral-500 text-sm font-light leading-relaxed">{s.description}</p>
                 </div>
-                <h4 className="text-2xl md:text-3xl font-bold mb-3 text-[#171717]">{s.title}</h4>
-              </div>
-              <p className="md:w-1/3 text-base md:text-lg text-neutral-600 font-medium leading-relaxed">{s.description}</p>
-              <div className="md:w-1/6 md:text-right flex flex-row md:flex-col items-center md:items-end justify-between gap-4">
-                <div className="text-right">
-                  <span className="text-xs text-neutral-400 uppercase tracking-widest">Start from</span>
-                  <p className="font-mono text-xl text-[#171717] font-bold">{s.price}</p>
+                <div className="flex items-center justify-between md:w-1/2 md:justify-end gap-8">
+                  <span className="text-white/80 font-light">{s.price}</span>
+                  <button 
+                    onClick={() => openWA(`Saya tertarik dengan service: ${s.title}`)}
+                    className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center group-hover:bg-[#D4AF37] group-hover:border-[#D4AF37] group-hover:text-black transition-all"
+                  >
+                    <ArrowUpRight size={20} />
+                  </button>
                 </div>
-                <button 
-                  onClick={() => openWA(`Saya mau order service: ${s.title}`)}
-                  className="px-6 py-2 bg-[#171717] text-white hover:bg-yellow-400 hover:text-black rounded-full font-bold text-sm transition-colors shadow-lg"
-                >
-                  Pesan
-                </button>
               </div>
-            </div>
-          </motion.div>
-        ))}
+            </motion.div>
+          ))}
+        </div>
       </div>
     </section>
   );
@@ -290,44 +246,35 @@ const Services = () => {
 const About = () => {
   return (
     <section id="about" className="py-24 md:py-32 px-6 container mx-auto">
-      <div className="glass-panel p-8 md:p-16 rounded-[2.5rem]">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
-          <div className="relative group hover-target">
-             <div className="relative aspect-[3/4] rounded-3xl overflow-hidden bg-neutral-200 shadow-2xl shadow-yellow-400/10">
-               <img 
-                 src="/foto-profil.jpg" 
-                 onError={(e) => e.target.src = "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1000&auto=format&fit=crop"} 
-                 alt="Alexander Voss" 
-                 className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
-               />
+      <div className="grid md:grid-cols-2 gap-16 items-center">
+        <div className="relative aspect-[3/4] md:aspect-square bg-[#111] overflow-hidden">
+           <img 
+             src="/foto-profil.jpg" 
+             onError={(e) => e.target.src = "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1000&auto=format&fit=crop"}
+             alt="Profile" 
+             className="w-full h-full object-cover grayscale opacity-70 hover:opacity-100 transition-opacity duration-700"
+           />
+        </div>
+
+        <div>
+          <span className="text-[#D4AF37] text-xs tracking-[0.2em] uppercase block mb-6">The Designer</span>
+          <h2 className="text-4xl md:text-6xl text-white mb-8 font-serif-display italic leading-tight">
+            Alexander Voss.
+          </h2>
+          <p className="text-lg text-neutral-400 font-light leading-relaxed mb-10">
+            Saya percaya bahwa desain bukan hanya soal visual, tapi soal <strong>status</strong>. 
+            Saya membantu brand Anda tampil lebih mahal dan dipercaya melalui strategi visual yang matang.
+          </p>
+
+          <div className="grid grid-cols-2 gap-4 border-t border-white/10 pt-8">
+             <div>
+                <span className="block text-2xl text-white font-serif-display">3+ Years</span>
+                <span className="text-xs text-neutral-500 uppercase tracking-widest">Experience</span>
              </div>
-          </div>
-
-          <div className="space-y-10">
-            <div>
-              <h2 className="text-sm font-mono tracking-widest text-neutral-500 mb-4 uppercase">Profile</h2>
-              <h3 className="text-4xl md:text-6xl font-black mb-8 leading-tight text-[#171717]">
-                DETAIL IS <br/> EVERYTHING.
-              </h3>
-              <p className="text-lg text-neutral-600 leading-relaxed">
-                Halo, saya Alexander. Saya percaya desain itu harus <strong>fungsional</strong> dan <strong>estetik</strong>. 
-                Dengan menggunakan teori warna yang tepat, saya memastikan brand kamu tidak hanya "terlihat bagus", tapi juga "terasa benar" di mata pelanggan.
-              </p>
-            </div>
-
-            <div className="border-t border-neutral-200 pt-10">
-              <h4 className="text-sm font-bold uppercase tracking-widest mb-6 flex items-center gap-2 text-neutral-500">
-                <Code2 size={16} /> Stack & Tools
-              </h4>
-              <div className="flex flex-wrap gap-3">
-                {SKILLS.map((skill, index) => (
-                  <div key={index} className="flex items-center gap-2 px-4 py-2 bg-white border border-neutral-200 rounded-lg shadow-sm hover:border-yellow-400 transition-colors cursor-default">
-                    <CheckCircle2 size={16} className="text-yellow-500" />
-                    <span className="text-sm font-bold text-neutral-700">{skill}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
+             <div>
+                <span className="block text-2xl text-white font-serif-display">50+ Projects</span>
+                <span className="text-xs text-neutral-500 uppercase tracking-widest">Completed</span>
+             </div>
           </div>
         </div>
       </div>
@@ -339,53 +286,45 @@ const Contact = () => {
   const { register, handleSubmit } = useForm();
   return (
     <section id="contact" className="py-24 md:py-32 px-6 container mx-auto">
-      <div className="bg-[#171717] text-white rounded-[3rem] p-8 md:p-24 relative overflow-hidden shadow-2xl">
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-yellow-400/20 blur-[150px] rounded-full pointer-events-none" />
-        
-        <div className="grid lg:grid-cols-2 gap-16 relative z-10">
-          <div>
-            <h2 className="text-5xl md:text-8xl font-black tracking-tighter mb-8 leading-[0.9]">
-              LET'S <br/>COLLAB.
-            </h2>
-            <p className="text-lg md:text-xl text-neutral-400 mb-12 max-w-md">
-              Jangan ragu buat tanya-tanya dulu. Konsultasi ide itu gratis, eksekusinya baru bayar.
-            </p>
-            <div className="space-y-4">
-              <a href="mailto:hello@alexandervoss.com" className="block text-2xl font-bold hover:text-yellow-400 transition-colors">hello@alexandervoss.com</a>
-              <a href="#" className="block text-2xl font-bold hover:text-yellow-400 transition-colors">+62 812 3456 7890</a>
-            </div>
-            <div className="flex gap-6 mt-12">
-               <Instagram size={28} className="hover:text-yellow-400 cursor-pointer transition-colors text-neutral-500" />
-               <Twitter size={28} className="hover:text-yellow-400 cursor-pointer transition-colors text-neutral-500" />
-               <Dribbble size={28} className="hover:text-yellow-400 cursor-pointer transition-colors text-neutral-500" />
-            </div>
-          </div>
-          <form onSubmit={handleSubmit((d) => openWA(`Nama: ${d.name}\nProject: ${d.message}`))} className="space-y-5">
-            <div className="space-y-2">
-              <label className="text-xs font-bold uppercase tracking-widest text-neutral-500">Nama</label>
-              <input {...register("name")} className="w-full bg-white/5 border border-white/10 p-5 rounded-2xl text-lg focus:bg-white/10 focus:border-yellow-400 outline-none placeholder:text-neutral-600 text-white transition-all" placeholder="Nama Bro/Sist" required />
-            </div>
-            <div className="space-y-2">
-              <label className="text-xs font-bold uppercase tracking-widest text-neutral-500">Email</label>
-              <input {...register("email")} className="w-full bg-white/5 border border-white/10 p-5 rounded-2xl text-lg focus:bg-white/10 focus:border-yellow-400 outline-none placeholder:text-neutral-600 text-white transition-all" placeholder="email@contoh.com" required />
-            </div>
-            <div className="space-y-2">
-              <label className="text-xs font-bold uppercase tracking-widest text-neutral-500">Detail Project</label>
-              <textarea {...register("message")} rows={4} className="w-full bg-white/5 border border-white/10 p-5 rounded-2xl text-lg focus:bg-white/10 focus:border-yellow-400 outline-none resize-none placeholder:text-neutral-600 text-white transition-all" placeholder="Mau bikin banner warkop..." required />
-            </div>
-            <MagneticButton className="w-full py-6 bg-yellow-400 text-black rounded-2xl font-bold text-lg hover:bg-yellow-300 transition-colors flex justify-center items-center gap-3 shadow-[0_0_40px_-10px_rgba(250,204,21,0.5)]">
-              Kirim via WhatsApp <Sparkles size={20} />
-            </MagneticButton>
-          </form>
+      <div className="flex flex-col md:flex-row justify-between gap-16">
+        <div className="md:w-1/2">
+           <h2 className="text-5xl md:text-7xl text-white font-serif-display mb-8">
+             Let's create <br/> <span className="text-white/30 italic">something timeless.</span>
+           </h2>
+           <p className="text-neutral-400 mb-12 max-w-sm">
+             Siap menaikkan level brand Anda? Hubungi saya untuk konsultasi eksklusif.
+           </p>
+           
+           <div className="space-y-4">
+             <a href="mailto:hello@alexandervoss.com" className="block text-xl text-white hover:text-[#D4AF37] transition-colors">hello@alexandervoss.com</a>
+             <a href="#" className="block text-xl text-white hover:text-[#D4AF37] transition-colors">+62 812 3456 7890</a>
+           </div>
         </div>
+
+        <form onSubmit={handleSubmit((d) => openWA(`Nama: ${d.name}\nProject: ${d.message}`))} className="md:w-1/2 space-y-8">
+          <div className="border-b border-white/20 pb-2">
+            <input {...register("name")} className="w-full bg-transparent text-xl md:text-2xl text-white placeholder:text-white/20 outline-none py-4" placeholder="Your Name" required />
+          </div>
+          <div className="border-b border-white/20 pb-2">
+            <input {...register("email")} className="w-full bg-transparent text-xl md:text-2xl text-white placeholder:text-white/20 outline-none py-4" placeholder="Email Address" required />
+          </div>
+          <div className="border-b border-white/20 pb-2">
+            <textarea {...register("message")} rows={3} className="w-full bg-transparent text-xl md:text-2xl text-white placeholder:text-white/20 outline-none py-4 resize-none" placeholder="Tell me about your project" required />
+          </div>
+          
+          <button className="px-10 py-5 bg-white text-black rounded-full font-bold text-sm tracking-widest uppercase hover:bg-[#D4AF37] hover:text-white transition-all duration-300 w-full md:w-auto">
+            Send Proposal
+          </button>
+        </form>
       </div>
     </section>
   );
 };
 
 const Footer = () => (
-  <footer className="pb-8 pt-12 text-center text-neutral-400 font-mono text-xs uppercase tracking-widest">
-    <p>© 2026 ALEXANDER VOSS. PADANG, ID.</p>
+  <footer className="py-12 border-t border-white/10 text-center">
+    <span className="font-serif-display text-2xl text-white italic">AV.</span>
+    <p className="text-neutral-600 text-xs tracking-widest uppercase mt-4">© 2026 Alexander Voss. Padang, Indonesia.</p>
   </footer>
 );
 
@@ -394,14 +333,11 @@ export default function App() {
 
   useEffect(() => {
     const lenis = new Lenis({
-      duration: 1.2,
+      duration: 1.5,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       direction: 'vertical',
-      gestureDirection: 'vertical',
       smooth: true,
-      mouseMultiplier: 1,
       smoothTouch: false,
-      touchMultiplier: 2,
     });
 
     function raf(time) {
@@ -414,16 +350,13 @@ export default function App() {
   }, []);
 
   return (
-    <div className="bg-[#FAFAFA] min-h-screen text-[#171717] overflow-x-hidden">
-      <div className="bg-grain" /> 
-      
+    <div className="bg-[#050505] min-h-screen text-[#E0E0E0] overflow-x-hidden">
       <AnimatePresence>
         {loading && <Preloader onComplete={() => setLoading(false)} />}
       </AnimatePresence>
 
       {!loading && (
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-          <Cursor />
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }}>
           <Navbar />
           <Hero />
           <Work />
