@@ -45,7 +45,7 @@ const Navbar = () => {
     >
       <span className="font-serif-display text-xl italic tracking-wide">AV.</span>
       <div className="hidden md:flex gap-8">
-        {['Services', 'Work', 'Tools', 'Contact'].map((item) => (
+        {['Services', 'Work', 'About', 'Contact'].map((item) => (
           <button 
             key={item} 
             onClick={() => scrollTo(item.toLowerCase())}
@@ -66,36 +66,68 @@ const Navbar = () => {
 
 const Hero = () => {
   return (
-    // FIX HP: min-h-[70vh] biar gak terlalu tinggi di HP, py-20 biar jarak aman.
-    <section id="hero" className="min-h-[70vh] md:min-h-screen flex flex-col justify-center items-center px-6 py-24 md:py-0 relative container mx-auto text-center">
+    <section id="hero" className="min-h-[90vh] flex items-center px-6 pt-28 pb-10 relative container mx-auto">
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[60vw] bg-[#D4AF37] opacity-[0.04] blur-[120px] rounded-full pointer-events-none" />
 
-      <motion.div 
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1.2, ease: "easeOut" }}
-        className="z-10 max-w-4xl mx-auto"
-      >
-        <p className="text-[#D4AF37] text-xs md:text-sm font-medium tracking-[0.3em] uppercase mb-4 md:mb-8">
-          Padang, Indonesia
-        </p>
-
-        <h1 className="text-[12vw] md:text-[8vw] leading-[1.1] md:leading-[1] font-serif-display font-medium text-white mb-6 md:mb-8">
-          Visual Brand <br/> 
-          <span className="text-white/40 italic">Specialist.</span>
-        </h1>
+      <div className="grid md:grid-cols-2 gap-12 items-center w-full z-10">
         
-        <p className="text-sm md:text-lg text-neutral-400 max-w-xl mx-auto leading-relaxed font-light mb-8 md:mb-12">
-          Menaikkan nilai brand Anda melalui <span className="text-white">Social Media</span>, <span className="text-white">Livery</span>, dan <span className="text-white">Banner</span> yang berkelas.
-        </p>
-        
-        <button 
-          className="px-8 py-4 bg-white text-black rounded-full font-bold text-xs tracking-widest uppercase hover:bg-[#D4AF37] hover:text-white transition-all duration-300"
-          onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
+        {/* TEXT SIDE */}
+        <motion.div 
+          initial={{ opacity: 0, x: -50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 1, ease: "easeOut" }}
+          className="order-2 md:order-1 text-center md:text-left"
         >
-          Lihat Layanan
-        </button>
-      </motion.div>
+          <p className="text-[#D4AF37] text-xs font-medium tracking-[0.3em] uppercase mb-4">
+            Padang, Indonesia
+          </p>
+
+          <h1 className="text-5xl md:text-7xl lg:text-8xl leading-[1.1] md:leading-[1] font-serif-display font-medium text-white mb-6">
+            Visual Brand <br/> 
+            <span className="text-neutral-600 italic">Specialist.</span>
+          </h1>
+          
+          <p className="text-sm md:text-lg text-neutral-400 max-w-md mx-auto md:mx-0 leading-relaxed font-light mb-8">
+            Saya membantu brand Anda tampil <strong>mahal</strong> dan <strong>terpercaya</strong> lewat strategi visual di Social Media, Livery Kendaraan, dan Banner.
+          </p>
+          
+          <div className="flex flex-col md:flex-row gap-4 justify-center md:justify-start">
+             <button 
+              className="px-8 py-4 bg-white text-black rounded-full font-bold text-xs tracking-widest uppercase hover:bg-[#D4AF37] hover:text-white transition-all duration-300"
+              onClick={() => document.getElementById('work')?.scrollIntoView({ behavior: 'smooth' })}
+            >
+              Lihat Karya
+            </button>
+            <button 
+              className="px-8 py-4 border border-white/20 text-white rounded-full font-bold text-xs tracking-widest uppercase hover:bg-white/10 transition-all duration-300"
+              onClick={() => openWA("Halo, saya mau konsultasi.")}
+            >
+              Konsultasi
+            </button>
+          </div>
+        </motion.div>
+
+        {/* PHOTO SIDE (FOTO LU DISINI) */}
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1, delay: 0.2 }}
+          className="order-1 md:order-2 flex justify-center md:justify-end"
+        >
+          <div className="relative w-[70%] md:w-[80%] aspect-[3/4] rounded-t-[10rem] rounded-b-[2rem] overflow-hidden border border-white/10 shadow-2xl">
+            {/* GANTI FOTO INI */}
+            <img 
+              src="/foto-profil.jpg" 
+              onError={(e) => e.target.src = "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1000&auto=format&fit=crop"}
+              alt="Alexander Voss" 
+              className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-1000 scale-105 hover:scale-100" 
+            />
+            
+            {/* Overlay Gradient bawah */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60"></div>
+          </div>
+        </motion.div>
+      </div>
     </section>
   );
 };
@@ -105,7 +137,7 @@ const Services = () => {
     <section id="services" className="py-20 md:py-32 px-6 container mx-auto">
       <div className="text-center mb-16">
         <span className="text-[#D4AF37] text-xs tracking-[0.2em] uppercase">Services</span>
-        <h2 className="text-4xl md:text-5xl text-white font-serif-display mt-4">Apa yang saya kerjakan?</h2>
+        <h2 className="text-4xl md:text-5xl text-white font-serif-display mt-4">Expertise.</h2>
       </div>
 
       <div className="grid md:grid-cols-3 gap-8">
@@ -130,15 +162,15 @@ const Services = () => {
   );
 };
 
-// --- ANIMASI MARQUEE (Di Bawah Fitur) ---
+// --- ANIMASI MARQUEE ---
 const MarqueeWork = () => {
-  const loopProject = [...PROJECTS, ...PROJECTS]; // Duplikasi data biar panjang
+  const loopProject = [...PROJECTS, ...PROJECTS];
   return (
     <div className="py-12 bg-[#0a0a0a] overflow-hidden border-y border-white/5">
       <motion.div 
         className="flex gap-8 w-max"
         animate={{ x: ["0%", "-50%"] }} 
-        transition={{ repeat: Infinity, ease: "linear", duration: 20 }}
+        transition={{ repeat: Infinity, ease: "linear", duration: 30 }}
       >
         {loopProject.map((p, i) => (
           <div key={i} className="relative w-[250px] aspect-video rounded-lg overflow-hidden opacity-50 hover:opacity-100 transition-opacity grayscale hover:grayscale-0">
@@ -150,9 +182,8 @@ const MarqueeWork = () => {
   );
 };
 
-// --- STATIC GALLERY (Diam & Rapi) ---
+// --- STATIC GALLERY ---
 const StaticGallery = () => {
-  // Filter Data
   const sosmed = PROJECTS.filter(p => p.category === 'Social Media');
   const banners = PROJECTS.filter(p => p.category === 'Banner');
   const livery = PROJECTS.filter(p => p.category === 'Livery');
@@ -164,7 +195,7 @@ const StaticGallery = () => {
         <h2 className="text-4xl md:text-5xl text-white font-serif-display mt-4">Selected Works</h2>
       </div>
 
-      {/* 1. SOCIAL MEDIA (Portrait Layout) */}
+      {/* SOCIAL MEDIA */}
       <div className="mb-24">
         <div className="flex items-center gap-4 mb-8">
            <div className="w-12 h-[1px] bg-[#D4AF37]"></div>
@@ -174,14 +205,12 @@ const StaticGallery = () => {
            {sosmed.map(p => (
              <div key={p.id} className="group relative aspect-[4/5] bg-[#111] overflow-hidden rounded-xl">
                <img src={p.image} alt={p.title} className="w-full h-full object-cover opacity-80 group-hover:scale-110 transition-transform duration-700" />
-               <div className="absolute inset-0 bg-black/40 group-hover:bg-transparent transition-all" />
-               <p className="absolute bottom-4 left-4 text-white text-sm font-bold opacity-0 group-hover:opacity-100 transition-opacity translate-y-2 group-hover:translate-y-0">{p.title}</p>
              </div>
            ))}
         </div>
       </div>
 
-      {/* 2. BANNER (Landscape Layout) */}
+      {/* BANNER */}
       <div className="mb-24">
         <div className="flex items-center gap-4 mb-8">
            <div className="w-12 h-[1px] bg-[#D4AF37]"></div>
@@ -191,14 +220,12 @@ const StaticGallery = () => {
            {banners.map(p => (
              <div key={p.id} className="group relative aspect-video bg-[#111] overflow-hidden rounded-xl">
                <img src={p.image} alt={p.title} className="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-700" />
-               <div className="absolute inset-0 bg-black/40 group-hover:bg-transparent transition-all" />
-               <p className="absolute bottom-6 left-6 text-white text-xl font-serif-display italic">{p.title}</p>
              </div>
            ))}
         </div>
       </div>
 
-      {/* 3. LIVERY (Wide Layout) */}
+      {/* LIVERY */}
       <div>
         <div className="flex items-center gap-4 mb-8">
            <div className="w-12 h-[1px] bg-[#D4AF37]"></div>
@@ -208,10 +235,6 @@ const StaticGallery = () => {
            {livery.map(p => (
              <div key={p.id} className="group relative w-full aspect-[2.35/1] bg-[#111] overflow-hidden rounded-xl">
                <img src={p.image} alt={p.title} className="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-700" />
-               <div className="absolute inset-0 bg-black/40 group-hover:bg-transparent transition-all" />
-               <div className="absolute bottom-6 left-6 md:bottom-10 md:left-10">
-                 <h4 className="text-2xl md:text-4xl text-white font-serif-display italic">{p.title}</h4>
-               </div>
              </div>
            ))}
         </div>
@@ -220,21 +243,45 @@ const StaticGallery = () => {
   );
 };
 
-// --- TOOLS SECTION ---
-const Tools = () => {
+// --- ABOUT SECTION (DIKEMBALIKAN) ---
+const About = () => {
   return (
-    <section id="tools" className="py-20 px-6 container mx-auto border-t border-white/10">
-      <div className="flex flex-col md:flex-row items-center gap-12">
-        <div className="md:w-1/3 text-center md:text-left">
-           <h3 className="text-3xl text-white font-serif-display mb-4">The Tools.</h3>
-           <p className="text-neutral-500 text-sm">Software standar industri yang saya gunakan untuk hasil maksimal.</p>
-        </div>
-        <div className="md:w-2/3 flex flex-wrap justify-center md:justify-start gap-4">
-           {SKILLS.map((skill, i) => (
-             <div key={i} className="px-6 py-3 border border-white/10 rounded-full text-neutral-400 hover:text-[#D4AF37] hover:border-[#D4AF37] transition-colors cursor-default">
-               <span className="text-sm font-medium uppercase tracking-widest">{skill}</span>
+    <section id="about" className="py-24 px-6 container mx-auto border-t border-white/10">
+      <div className="grid md:grid-cols-2 gap-16 items-center">
+        <div>
+           <span className="text-[#D4AF37] text-xs tracking-[0.2em] uppercase block mb-6">About Me</span>
+           <h2 className="text-4xl md:text-6xl text-white font-serif-display mb-8">
+             Obsessed with <br/> <span className="italic text-neutral-600">Perfection.</span>
+           </h2>
+           <p className="text-neutral-400 leading-relaxed mb-6">
+             Halo, saya Alexander. Saya adalah desainer yang percaya bahwa visual yang bagus bukan hanya soal "cantik", tapi soal "status".
+           </p>
+           <p className="text-neutral-400 leading-relaxed mb-8">
+             Saya menggabungkan layout yang rapi, tipografi yang berkelas, dan teori warna psikologis untuk memastikan setiap banner, feed, atau stiker mobil yang saya buat memberikan dampak positif bagi bisnis Anda.
+           </p>
+           
+           <div className="flex gap-8">
+             <div>
+               <span className="block text-3xl text-white font-serif-display">3+</span>
+               <span className="text-xs text-neutral-500 uppercase tracking-widest">Years Exp</span>
              </div>
-           ))}
+             <div>
+               <span className="block text-3xl text-white font-serif-display">50+</span>
+               <span className="text-xs text-neutral-500 uppercase tracking-widest">Projects</span>
+             </div>
+           </div>
+        </div>
+        
+        {/* Tools Grid */}
+        <div className="bg-[#111] p-8 rounded-2xl border border-white/5">
+           <h3 className="text-xl text-white mb-6 font-serif-display italic">Weapon of Choice</h3>
+           <div className="flex flex-wrap gap-3">
+             {SKILLS.map((skill, i) => (
+               <span key={i} className="px-4 py-2 bg-white/5 rounded-full text-xs text-neutral-400 border border-white/5">
+                 {skill}
+               </span>
+             ))}
+           </div>
         </div>
       </div>
     </section>
@@ -308,7 +355,7 @@ export default function App() {
           <Services />
           <MarqueeWork />
           <StaticGallery />
-          <Tools /> 
+          <About /> 
           <Contact />
           <Footer />
         </motion.div>
