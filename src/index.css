@@ -3,55 +3,41 @@
 @tailwind utilities;
 
 @layer base {
-  html.lenis {
-    height: auto;
-  }
-  .lenis.lenis-smooth {
-    scroll-behavior: auto;
-  }
-  .lenis.lenis-smooth [data-lenis-prevent] {
-    overscroll-behavior: contain;
-  }
-  .lenis.lenis-stopped {
-    overflow: hidden;
-  }
+  html.lenis { height: auto; }
+  .lenis.lenis-smooth { scroll-behavior: auto; }
+  .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+  .lenis.lenis-stopped { overflow: hidden; }
 
   body {
-    @apply bg-[#080808] text-[#EAEAEA] antialiased selection:bg-[#EAEAEA] selection:text-black;
-    cursor: none; /* Kita pakai custom cursor */
+    /* Background Putih Abu-abu (Apple Style) */
+    @apply bg-[#F2F2F7] text-[#1D1D1F] antialiased selection:bg-[#1D1D1F] selection:text-white;
+    cursor: none;
   }
 
-  /* Hilangkan Scrollbar Bawaan biar bersih */
-  ::-webkit-scrollbar {
-    display: none;
-  }
+  /* Scrollbar Abu-abu Halus */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { @apply bg-transparent; }
+  ::-webkit-scrollbar-thumb { @apply bg-neutral-300 rounded-full hover:bg-neutral-400; }
 }
 
 @layer utilities {
   .font-display {
-    letter-spacing: -0.03em;
+    letter-spacing: -0.04em;
     line-height: 0.95;
   }
   
-  /* Efek Grain/Noise biar gak flat */
-  .bg-grain {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 9999;
-    opacity: 0.04;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  /* Efek Kaca (Glassmorphism) untuk Light Mode */
+  .glass-panel {
+    @apply bg-white/60 backdrop-blur-xl border border-white/40 shadow-sm;
   }
-
-  .blend-difference {
-    mix-blend-mode: difference;
+  
+  .bg-grain {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; opacity: 0.4;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    mix-blend-mode: overlay;
   }
 }
 
-/* Responsive Cursor */
 @media (max-width: 768px) {
   body { cursor: auto !important; }
 }
