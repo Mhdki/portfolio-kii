@@ -1,50 +1,72 @@
-const Hero = () => {
-  const scrollToWork = () => {
-    const workSection = document.getElementById('work');
-    if (workSection) workSection.scrollIntoView({ behavior: 'smooth' });
+import React, { useState, useEffect, useRef } from 'react';
+import { motion, useSpring, useMotionValue, AnimatePresence } from 'framer-motion';
+import Lenis from '@studio-freight/lenis';
+import { 
+  ArrowRight, ArrowUpRight, Instagram, Twitter, Dribbble, Sparkles, Code2, CheckCircle2
+} from 'lucide-react';
+import { useForm } from 'react-hook-form';
+import { PROJECTS, SERVICES, SKILLS } from './data';
+
+// --- CONFIG ---
+const WA_NUMBER = "6281234567890"; // GANTI NOMOR WA
+
+const openWA = (msg) => window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
+
+// --- COMPONENTS ---
+
+const Preloader = ({ onComplete }) => {
+  return (
+    <motion.div
+      className="fixed inset-0 z-[99999] flex items-center justify-center bg-[#FAFAFA]"
+      initial={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.8 }}
+    >
+      <div className="overflow-hidden relative">
+        <motion.h1
+          className="text-4xl md:text-8xl font-black text-[#111] tracking-tighter text-center"
+          initial={{ y: 100 }}
+          animate={{ y: 0 }}
+          transition={{ duration: 0.8, ease: "circOut" }}
+          onAnimationComplete={() => setTimeout(onComplete, 1500)}
+        >
+          ALEXANDER <span className="text-yellow-500">VOSS</span>
+        </motion.h1>
+      </div>
+    </motion.div>
+  );
+};
+
+const MagneticButton = ({ children, className, onClick }) => {
+  const ref = useRef(null);
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const mouseX = useSpring(x, { stiffness: 150, damping: 15, mass: 0.1 });
+  const mouseY = useSpring(y, { stiffness: 150, damping: 15, mass: 0.1 });
+
+  const handleMouseMove = (e) => {
+    const { clientX, clientY } = e;
+    const { height, width, left, top } = ref.current.getBoundingClientRect();
+    const middleX = clientX - (left + width / 2);
+    const middleY = clientY - (top + height / 2);
+    x.set(middleX * 0.2);
+    y.set(middleY * 0.2);
   };
+  const reset = () => { x.set(0); y.set(0); };
 
   return (
-    <section id="hero" className="min-h-[90vh] flex flex-col justify-center px-6 pt-40 pb-20 md:py-0 relative container mx-auto">
-      <motion.div 
-        initial={{ opacity: 0, y: 50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, ease: [0.76, 0, 0.24, 1] }}
-        className="z-10 relative"
-      >
-        {/* STATUS BAR */}
-        <div className="inline-flex items-center gap-3 mb-8 p-2 pr-5 bg-white border border-neutral-200 rounded-full shadow-sm">
-          <div className="w-2.5 h-2.5 bg-yellow-400 rounded-full animate-pulse ml-2" />
-          <span className="font-mono text-xs font-bold tracking-widest text-neutral-600 uppercase">Siap Menerima Order</span>
-        </div>
-        
-        {/* HEADLINE UTAMA: VISUAL PARTNER */}
-        <h1 className="text-[13vw] md:text-[10vw] leading-[0.9] font-black font-display tracking-tighter text-[#111] mb-8">
-          SPESIALIS <br/>
-          <span className="text-neutral-300">VISUAL BRAND.</span>
-        </h1>
-        
-        {/* DESKRIPSI: MENYEBUTKAN 3 SKILL UTAMA LU SECARA JELAS */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end border-t border-neutral-200 pt-8 mt-4 md:mt-12">
-          <p className="text-lg md:text-2xl max-w-xl leading-relaxed text-neutral-600 mb-10 md:mb-0">
-            Saya membantu usahamu terlihat lebih meyakinkan dan profesional. Fokus mengerjakan:
-            <br/><br/>
-            {/* LIST SKILL DENGAN HIGHLIGHT KUNING */}
-            <span className="inline-block mb-1">✨ <strong className="text-black bg-yellow-200 px-1">Social Media Design</strong> (Feed/Story)</span><br/>
-            <span className="inline-block mb-1">🏎️ <strong className="text-black bg-yellow-200 px-1">Vehicle Livery</strong> (Branding Mobil)</span><br/>
-            <span className="inline-block">📢 <strong className="text-black bg-yellow-200 px-1">Banner & Spanduk Promosi</strong></span>
-          </p>
-          
-          {/* TOMBOL CTA */}
-          <MagneticButton 
-            className="w-full md:w-auto px-10 py-5 bg-yellow-400 text-black rounded-full font-bold text-lg flex justify-center items-center gap-3 shadow-lg hover:bg-yellow-300 transition-all hover-target"
-            onClick={scrollToWork}
-          >
-            Lihat Contoh Karya <ArrowRight size={20} />
-          </MagneticButton>
-        </div>
-      </motion.div>
-    </section>
+    <motion.button
+      ref={ref}
+      className={className}
+      onClick={onClick}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={reset}
+      style={{ x: mouseX, y: mouseY }}
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+    >
+      {children}
+    </motion.button>
   );
 };
 
@@ -114,26 +136,33 @@ const Hero = () => {
         transition={{ duration: 1, ease: [0.76, 0, 0.24, 1] }}
         className="z-10 relative"
       >
+        {/* STATUS BAR INDONESIA */}
         <div className="inline-flex items-center gap-3 mb-8 p-2 pr-5 bg-white border border-neutral-200 rounded-full shadow-sm">
           <div className="w-2.5 h-2.5 bg-yellow-400 rounded-full animate-pulse ml-2" />
-          <span className="font-mono text-xs font-bold tracking-widest text-neutral-600 uppercase">Open for Hire</span>
+          <span className="font-mono text-xs font-bold tracking-widest text-neutral-600 uppercase">Siap Menerima Order</span>
         </div>
         
-        <h1 className="text-[14vw] md:text-[11vw] leading-[0.9] font-black font-display tracking-tighter text-[#111] mb-8">
-          DIGITAL <br/>
-          <span className="text-neutral-300">ALCHEMIST</span>
+        {/* HEADLINE INDONESIA */}
+        <h1 className="text-[13vw] md:text-[10vw] leading-[0.9] font-black font-display tracking-tighter text-[#111] mb-8">
+          SPESIALIS <br/>
+          <span className="text-neutral-300">VISUAL BRAND.</span>
         </h1>
         
+        {/* DESKRIPSI KE AHLIAN (SOSMED, LIVERY, BANNER) */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end border-t border-neutral-200 pt-8 mt-4 md:mt-12">
-          <p className="text-lg md:text-2xl max-w-lg leading-relaxed text-neutral-600 mb-10 md:mb-0">
-            Fokus menciptakan visual yang mahal. Spesialis <strong className="text-black bg-yellow-200 px-1">Social Media</strong>, <strong className="text-black bg-yellow-200 px-1">Livery</strong>, & <strong className="text-black bg-yellow-200 px-1">Banner</strong>.
+          <p className="text-lg md:text-2xl max-w-xl leading-relaxed text-neutral-600 mb-10 md:mb-0">
+            Saya membantu usahamu terlihat lebih meyakinkan dan profesional. Fokus mengerjakan:
+            <br/><br/>
+            <span className="inline-block mb-1">✨ <strong className="text-black bg-yellow-200 px-1">Social Media Design</strong> (Feed/Story)</span><br/>
+            <span className="inline-block mb-1">🏎️ <strong className="text-black bg-yellow-200 px-1">Vehicle Livery</strong> (Branding Mobil)</span><br/>
+            <span className="inline-block">📢 <strong className="text-black bg-yellow-200 px-1">Banner & Spanduk Promosi</strong></span>
           </p>
           
           <MagneticButton 
             className="w-full md:w-auto px-10 py-5 bg-yellow-400 text-black rounded-full font-bold text-lg flex justify-center items-center gap-3 shadow-lg hover:bg-yellow-300 transition-all hover-target"
             onClick={scrollToWork}
           >
-            Lihat Karya <ArrowRight size={20} />
+            Lihat Contoh Karya <ArrowRight size={20} />
           </MagneticButton>
         </div>
       </motion.div>
@@ -148,7 +177,6 @@ const Work = () => {
         <h2 className="text-5xl md:text-8xl font-black tracking-tighter text-[#111]">SELECTED<br/><span className="text-neutral-300">WORK</span></h2>
       </div>
 
-      {/* GRID LAYOUT PINTAR (Bento Grid) */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {PROJECTS.map((project, i) => (
           <motion.div 
@@ -157,10 +185,8 @@ const Work = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-10%" }}
             transition={{ duration: 0.8 }}
-            // LOGIKA GRID: Kalau 'landscape' dia makan 2 kolom. Kalau 'portrait' cuma 1 kolom.
             className={`group cursor-pointer hover-target ${project.orientation === 'landscape' ? 'md:col-span-2' : 'md:col-span-1'}`}
           >
-            {/* Header Kartu */}
             <div className="flex items-center justify-between mb-4">
                <div className="flex items-center gap-3">
                   <span className={`px-3 py-1 text-xs font-bold uppercase tracking-widest rounded-md ${project.category === 'Banner' || project.category === 'Livery' ? 'bg-yellow-100 text-yellow-700' : 'bg-neutral-100 text-neutral-600'}`}>
@@ -173,7 +199,6 @@ const Work = () => {
                </div>
             </div>
 
-            {/* Gambar */}
             <div className={`relative w-full overflow-hidden rounded-[2rem] border border-neutral-100 shadow-sm group-hover:shadow-xl transition-all duration-500
               ${project.orientation === 'landscape' ? 'aspect-[16/9] md:aspect-[2.35/1]' : 'aspect-[4/5]'}
             `}>
@@ -347,7 +372,6 @@ const Footer = () => (
 export default function App() {
   const [loading, setLoading] = useState(true);
 
-  // LOGIKA SCROLL YANG LEBIH MULUS & FIX ANIMASI
   useEffect(() => {
     const lenis = new Lenis({
       duration: 1.2,
