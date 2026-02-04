@@ -33,7 +33,7 @@ const Preloader = ({ onComplete }) => {
           transition={{ duration: 0.8, ease: "circOut" }}
           onAnimationComplete={() => setTimeout(onComplete, 1500)} // Tahan 1.5 detik baru hilang
         >
-          ALEXANDER <span className="text-neutral-600">VOSS</span>
+          MUHAMMAD <span className="text-neutral-600">RESKI</span>
         </motion.h1>
       </div>
     </motion.div>
