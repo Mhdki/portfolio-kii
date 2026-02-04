@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;700;800&family=Space+Grotesk:wght@400;500;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;800&family=Syne:wght@400;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -11,40 +11,38 @@
   .lenis.lenis-stopped { overflow: hidden; }
 
   body {
-    @apply bg-white text-[#111] antialiased selection:bg-[#FF0080] selection:text-white;
-    font-family: 'Outfit', sans-serif;
+    /* Background Abu-abu Sangat Gelap (Hampir Hitam) */
+    @apply bg-[#0A0A0A] text-[#E5E5E5] antialiased selection:bg-[#10B981] selection:text-white;
+    font-family: 'Manrope', sans-serif;
     cursor: default;
   }
 
   h1, h2, h3, h4, h5 {
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: 'Syne', sans-serif; /* Font Judul yang Unik & Modern */
   }
 
-  ::-webkit-scrollbar { width: 0px; }
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { @apply bg-[#111]; }
+  ::-webkit-scrollbar-thumb { @apply bg-[#333] rounded-full; }
 }
 
 @layer utilities {
-  .font-heading { font-family: 'Space Grotesk', sans-serif; }
+  /* TEXTURE GRID HALUS DI BACKGROUND */
+  .bg-grid-pattern {
+    background-size: 40px 40px;
+    background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                      linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+  }
   
-  /* EFEK TEKS GRADASI BARU (Lebih Smooth) */
-  .text-gradient-pop {
-    @apply text-transparent bg-clip-text bg-gradient-to-r from-purple-600 via-pink-500 to-purple-600;
-    background-size: 200% auto;
-    animation: shine 5s linear infinite;
+  /* EFEK GLASS DARK */
+  .glass-dark {
+    @apply bg-[#151515]/80 backdrop-blur-xl border border-white/10;
   }
 
-  /* BACKGROUND BLOBS */
-  .blob-cont { position: fixed; top:0; left:0; width:100%; height:100vh; z-index:-1; overflow:hidden; background: white; }
-  .blob { position: absolute; border-radius: 50%; filter: blur(90px); opacity: 0.5; animation: float 15s infinite ease-in-out alternate; }
-  .blob-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: #FF0080; animation-delay: 0s; }
-  .blob-2 { bottom: -10%; right: -10%; width: 50vw; height: 50vw; background: #7928CA; animation-delay: -5s; }
-  .blob-3 { top: 40%; left: 40%; width: 45vw; height: 45vw; background: #00C1FF; animation-delay: -8s; }
-
-  @keyframes shine { to { background-position: 200% center; } }
-  @keyframes float { from { transform: translate(0,0) rotate(0deg); } to { transform: translate(40px, 60px) rotate(10deg); } }
-  
-  .glass-card {
-    @apply bg-white/70 backdrop-blur-xl border border-white/60 shadow-xl shadow-purple-500/5;
+  /* TEXT HIJAU GRADASI HALUS */
+  .text-emerald-glow {
+    @apply text-transparent bg-clip-text bg-gradient-to-r from-[#10B981] to-[#059669];
   }
 }
 
