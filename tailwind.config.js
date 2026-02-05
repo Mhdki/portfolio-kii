@@ -7,23 +7,18 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        'display': ['"Syne"', 'sans-serif'], // Font Judul "Behance Look"
-        'body': ['"Manrope"', 'sans-serif'], // Font Bacaan Bersih
+        'display': ['"Syne"', 'sans-serif'], // Font Judul Artistik
+        'body': ['"Manrope"', 'sans-serif'], // Font Bacaan Rapi
       },
       colors: {
-        'dark': '#0D0D0D',       // Hitam Premium
-        'card': '#161616',       // Abu Gelap untuk Kartu
-        'accent': '#D1F245',     // Lime Green (Warna Behance Hype)
-        'secondary': '#FFFFFF',  // Putih
-        'muted': '#888888',      // Abu-abu teks
-      },
-      backgroundImage: {
-        'noise': "url('https://grainy-gradients.vercel.app/noise.svg')",
-        'grid': "linear-gradient(to right, #222 1px, transparent 1px), linear-gradient(to bottom, #222 1px, transparent 1px)",
+        'dark': '#0D0D0D',       // Background Utama
+        'card': '#161616',       // Warna Kotak Bento
+        'accent': '#D1F245',     // Lime Green (Warna Behance)
+        'light': '#F4F4F4',      // Putih Tulang
+        'muted': '#888888',      // Abu-abu
       },
       animation: {
-        'spin-slow': 'spin 12s linear infinite',
-        'marquee': 'marquee 25s linear infinite',
+        'marquee': 'marquee 20s linear infinite',
       },
       keyframes: {
         marquee: {
