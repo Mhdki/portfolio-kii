@@ -7,16 +7,17 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        'sans': ['"Plus Jakarta Sans"', 'sans-serif'], // Font bulat modern mirip screenshot
+        'sans': ['"Plus Jakarta Sans"', 'sans-serif'],
       },
       colors: {
-        'brand-pink': '#FF4D80',   // Warna Pink Utama
-        'brand-dark': '#1D1D1D',   // Warna Hitam (Navbar/Footer)
-        'brand-gray': '#F5F5F5',   // Warna Background Abu tipis
-        'text-main': '#222222',    // Warna Teks Hitam
+        'brand-pink': '#FF4D80',   // Pink Salmon Khas Saikat
+        'brand-dark': '#151515',   // Hitam Background
+        'brand-card': '#1E1E1E',   // Abu Gelap Card
+        'text-main': '#222222',    // Teks Hitam
+        'text-gray': '#777777',    // Teks Abu
       },
-      boxShadow: {
-        'soft': '0 20px 40px -10px rgba(255, 77, 128, 0.15)',
+      backgroundImage: {
+        'gradient-pink': 'linear-gradient(135deg, #FF4D80 0%, #FF8FAB 100%)',
       }
     },
   },
