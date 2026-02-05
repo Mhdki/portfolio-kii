@@ -7,24 +7,16 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        'display': ['"Syne"', 'sans-serif'], // Font Judul Artistik
-        'body': ['"Manrope"', 'sans-serif'], // Font Bacaan Rapi
+        'sans': ['"Plus Jakarta Sans"', 'sans-serif'], // Font bulat modern mirip screenshot
       },
       colors: {
-        'dark': '#0D0D0D',       // Background Utama
-        'card': '#161616',       // Warna Kotak Bento
-        'accent': '#D1F245',     // Lime Green (Warna Behance)
-        'light': '#F4F4F4',      // Putih Tulang
-        'muted': '#888888',      // Abu-abu
+        'brand-pink': '#FF4D80',   // Warna Pink Utama
+        'brand-dark': '#1D1D1D',   // Warna Hitam (Navbar/Footer)
+        'brand-gray': '#F5F5F5',   // Warna Background Abu tipis
+        'text-main': '#222222',    // Warna Teks Hitam
       },
-      animation: {
-        'marquee': 'marquee 20s linear infinite',
-      },
-      keyframes: {
-        marquee: {
-          '0%': { transform: 'translateX(0%)' },
-          '100%': { transform: 'translateX(-100%)' },
-        }
+      boxShadow: {
+        'soft': '0 20px 40px -10px rgba(255, 77, 128, 0.15)',
       }
     },
   },
