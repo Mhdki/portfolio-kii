@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import Lenis from '@studio-freight/lenis';
-import { ArrowRight, Download, Layout, Smartphone, PenTool, Instagram, Linkedin, Mail, Music, MousePointer2, Code, Figma } from 'lucide-react';
+import { ArrowRight, Layout, Smartphone, PenTool, Music, MousePointer2, Code, Figma, X } from 'lucide-react';
 
-// --- MUSIC URL ---
+// --- CONFIG ---
 const MUSIC_URL = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3";
 
-// --- CUSTOM CURSOR COMPONENT ---
+// --- CUSTOM CURSOR ---
 const CustomCursor = () => {
   const dot = useRef(null);
   const outline = useRef(null);
@@ -20,7 +20,7 @@ const CustomCursor = () => {
   return <div className="hidden md:block"><div ref={dot} className="cursor-dot -translate-x-1/2 -translate-y-1/2"/><div ref={outline} className="cursor-outline -translate-x-1/2 -translate-y-1/2"/></div>;
 };
 
-// --- SVG LAYERS (DIGITAL DUST & SHAPES) ---
+// --- SVG LAYER: DIGITAL PARTICLES ---
 const DigitalDust = () => (
   <div className="absolute inset-0 opacity-20 pointer-events-none">
     <svg className="w-full h-full animate-pulse" viewBox="0 0 100 100" preserveAspectRatio="none">
@@ -33,13 +33,13 @@ const DigitalDust = () => (
   </div>
 );
 
-// --- COMPONENT: MARQUEE (RUNNING TEXT) ---
+// --- COMPONENT: MARQUEE STRIP ---
 const Marquee = () => (
   <div className="bg-brand-lime py-4 overflow-hidden border-y-2 border-brand-dark rotate-[-2deg] scale-110 relative z-20 my-20 shadow-[0_0_50px_rgba(204,243,129,0.3)]">
     <div className="flex gap-8 animate-[marquee_20s_linear_infinite] whitespace-nowrap font-bold text-brand-dark uppercase tracking-wider text-xl">
       {[...Array(10)].map((_, i) => (
         <span key={i} className="flex items-center gap-4">
-          Creative Design <span className="text-brand-purple">✦</span> Development <span className="text-brand-purple">✦</span> Branding
+          UI/UX Design <span className="text-brand-purple">✦</span> Mobile Apps <span className="text-brand-purple">✦</span> Development
         </span>
       ))}
     </div>
@@ -54,9 +54,12 @@ export default function App() {
   
   // PARALLAX LOGIC
   const { scrollY } = useScroll();
-  const yBg = useTransform(scrollY, [0, 1000], [0, 200]);   // Background lambat
-  const yText = useTransform(scrollY, [0, 1000], [0, 50]);  // Teks agak diam
-  const yFore = useTransform(scrollY, [0, 1000], [0, -400]); // Elemen depan ngebut
+  // Layer 1: Background (Lambat)
+  const yBg = useTransform(scrollY, [0, 1000], [0, 200]);   
+  // Layer 2: Teks Utama (Sedang)
+  const yText = useTransform(scrollY, [0, 1000], [0, 50]);  
+  // Layer 3: Foreground / Floating Icons (Cepat & Berlawanan)
+  const yFore = useTransform(scrollY, [0, 1000], [0, -400]); 
 
   useEffect(() => {
     const lenis = new Lenis({ duration: 1.5, smooth: true });
@@ -101,11 +104,11 @@ export default function App() {
       {/* --- KONTEN UTAMA --- */}
       <div className={`relative z-10 transition-opacity duration-1000 delay-500 ${isOpen ? 'opacity-100' : 'opacity-0'}`}>
 
-        {/* --- NAV --- */}
+        {/* NAV */}
         <nav className="fixed top-0 w-full z-40 px-6 py-6 mix-blend-difference text-brand-white">
            <div className="max-w-7xl mx-auto flex justify-between items-center">
               <div className="text-2xl font-black tracking-tighter">JENNY<span className="text-brand-lime">.</span></div>
-              <button className="border border-white/20 px-6 py-2 rounded-full hover:bg-brand-lime hover:text-brand-dark transition-colors font-bold text-sm">Let's Talk</button>
+              <button className="border border-white/20 px-6 py-2 rounded-full hover:bg-brand-lime hover:text-brand-dark transition-colors font-bold text-sm">Contact Me</button>
            </div>
         </nav>
         
@@ -114,6 +117,7 @@ export default function App() {
            
            {/* LAYER 1: BACK (GRID & PARTICLES) */}
            <motion.div style={{ y: yBg }} className="absolute inset-0 z-0 opacity-30">
+              {/* Grid Background */}
               <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
               <DigitalDust />
            </motion.div>
@@ -122,7 +126,7 @@ export default function App() {
            <motion.div style={{ y: yText }} className="relative z-10 container mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
               <div className="space-y-6">
                  <motion.div initial={{ x: -100, opacity: 0 }} whileInView={{ x: 0, opacity: 1 }} transition={{ duration: 1 }} className="inline-block px-4 py-2 bg-brand-lime/10 border border-brand-lime/20 text-brand-lime rounded-full text-sm font-bold">
-                    👋 Available for Freelance
+                    👋 Hello, I'm Jenny
                  </motion.div>
                  <h1 className="text-6xl md:text-8xl font-black leading-[0.9]">
                     PRODUCT <br/> <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-lime to-brand-purple">DESIGNER</span>
@@ -137,6 +141,7 @@ export default function App() {
               </div>
 
               <div className="relative">
+                 {/* Glow Effect */}
                  <div className="absolute inset-0 bg-brand-purple rounded-full blur-[100px] opacity-30 animate-pulse"></div>
                  <motion.img 
                    initial={{ scale: 0.8, opacity: 0 }} whileInView={{ scale: 1, opacity: 1 }} transition={{ duration: 1 }}
@@ -146,7 +151,7 @@ export default function App() {
               </div>
            </motion.div>
 
-           {/* LAYER 3: FOREGROUND (FLOATING UI ELEMENTS - FAST) */}
+           {/* LAYER 3: FOREGROUND (FLOATING ICONS - PARALLAX EFFECT) */}
            <motion.div style={{ y: yFore }} className="absolute inset-0 z-20 pointer-events-none">
               {/* Floating Figma Icon */}
               <div className="absolute top-[20%] right-[10%] bg-[#1E1E1E] p-4 rounded-2xl border border-white/10 shadow-2xl rotate-12">
@@ -166,11 +171,14 @@ export default function App() {
         {/* --- MARQUEE --- */}
         <Marquee />
 
-        {/* --- SERVICES (BENTO GRID STYLE) --- */}
+        {/* --- SERVICES (BENTO GRID) --- */}
         <section className="py-20 px-6 max-w-7xl mx-auto">
            <div className="flex justify-between items-end mb-12">
-              <h2 className="text-5xl font-black">MY SERVICES</h2>
-              <p className="text-gray-400 hidden md:block">Specialized in</p>
+              <div>
+                 <h2 className="text-brand-purple font-bold tracking-widest uppercase mb-2">My Services</h2>
+                 <h3 className="text-5xl font-black">WHAT I DO</h3>
+              </div>
+              <button className="text-brand-lime font-bold underline hidden md:block">View All Services</button>
            </div>
            
            <div className="grid md:grid-cols-3 gap-6">
@@ -207,7 +215,7 @@ export default function App() {
         <section className="py-32 px-6 text-center">
            <div className="max-w-4xl mx-auto bg-gradient-to-br from-brand-purple to-blue-900 rounded-[3rem] p-12 md:p-24 relative overflow-hidden">
               <div className="absolute inset-0 bg-noise opacity-20"></div>
-              <h2 className="text-4xl md:text-7xl font-black mb-8 relative z-10">LET'S CREATE SOMETHING EPIC</h2>
+              <h2 className="text-4xl md:text-7xl font-black mb-8 relative z-10">LET'S WORK TOGETHER</h2>
               <button className="bg-brand-lime text-brand-dark px-10 py-5 rounded-full font-bold text-lg hover:scale-105 transition-transform relative z-10 shadow-xl">
                  Start Project
               </button>
@@ -219,7 +227,7 @@ export default function App() {
         </footer>
       </div>
 
-      {/* --- MUSIC PLAYER (FLOAT) --- */}
+      {/* --- MUSIC PLAYER (FLOATING BUTTON) --- */}
       {isOpen && (
         <button onClick={() => { if(isPlaying) audioRef.current.pause(); else audioRef.current.play(); setIsPlaying(!isPlaying); }} className="fixed bottom-8 right-8 z-50 group">
           <div className={`w-14 h-14 rounded-full border border-brand-lime/30 bg-brand-dark/80 backdrop-blur flex items-center justify-center text-brand-lime shadow-2xl ${isPlaying ? 'animate-[spin_4s_linear_infinite]' : ''}`}>
