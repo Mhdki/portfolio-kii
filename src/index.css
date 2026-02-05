@@ -1,15 +1,26 @@
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+/* Jika ingin pakai font Syne untuk judul, uncomment baris ini: */
+/* @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&display=swap'); */
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 body {
-  /* Menggunakan latar abu muda, teks utama gelap */
-  @apply bg-light-grey text-text-main font-sans overflow-x-hidden;
+  @apply bg-brand-dark text-white font-sans overflow-x-hidden;
 }
 
-/* Scrollbar Ungu */
+/* Scrollbar Ungu Gelap */
 ::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-thumb { background: #7F00FF; border-radius: 10px; }
-::-webkit-scrollbar-track { background: #E5E7EB; }
+::-webkit-scrollbar-thumb { background: #8A2EFF; border-radius: 10px; }
+::-webkit-scrollbar-track { background: #0A0A0F; }
+
+/* Utility Class untuk Glassmorphism Konsisten */
+@layer components {
+  .glass-panel {
+    @apply bg-white/5 backdrop-blur-xl border border-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.37)];
+  }
+  .glass-panel-dark {
+    @apply bg-black/40 backdrop-blur-xl border border-white/5 shadow-[0_8px_32px_0_rgba(0,0,0,0.5)];
+  }
+}
