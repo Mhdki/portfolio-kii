@@ -1,12 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Layout, Image as ImageIcon, Truck, Menu, X, ArrowRight, Instagram, Dribbble, Linkedin, Send, User } from 'lucide-react';
+import { Layout, Image as ImageIcon, Truck, Menu, X, ArrowRight, Instagram, Dribbble, Linkedin, Send, User, Cpu, Layers, Monitor } from 'lucide-react';
 
 // --- CONFIG ---
 const WA_NUMBER = "6281234567890"; // GANTI NOMOR WA DISINI
 const EMAIL_ADDRESS = "emailkamu@gmail.com";
 
-// --- DATA ---
+// --- DATA TOOLS / SOFTWARE (NEW FITUR) ---
+const TOOLS = [
+  { id: 1, name: "Photoshop", code: "Ps", color: "#31A8FF", desc: "Manipulasi Foto & Retouching" },
+  { id: 2, name: "Illustrator", code: "Ai", color: "#FF9A00", desc: "Vektor & Logo Design" },
+  { id: 3, name: "CorelDraw", code: "Cd", color: "#00E078", desc: "Layout Cetak & Livery" },
+  { id: 4, name: "Figma", code: "Fi", color: "#A259FF", desc: "UI/UX & Prototyping" },
+  { id: 5, name: "VS Code", code: "Vs", color: "#23A7F2", desc: "Web Development" },
+  { id: 6, name: "Blender", code: "Bl", color: "#F5792A", desc: "3D Modeling & Mockup" },
+];
+
+// --- DATA SERVICES ---
 const SERVICES = [
   { 
     id: 1,
@@ -28,30 +38,27 @@ const SERVICES = [
   },
 ];
 
-// Data Portfolio diperbanyak agar galeri terlihat penuh
+// --- DATA PORTFOLIO ---
 const PORTFOLIO = [
   // Social Media
   { id: 1, cat: "Social Media", title: "Kopi Senja Feeds", img: "https://images.unsplash.com/photo-1511920170033-f8396924c348?q=80&w=800" },
   { id: 2, cat: "Social Media", title: "Gym Motivation", img: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=800" },
   { id: 3, cat: "Social Media", title: "Fashion Sale", img: "https://images.unsplash.com/photo-1611162616475-46b635cb6868?q=80&w=800" },
-  { id: 4, cat: "Social Media", title: "Tech Gadget Review", img: "https://images.unsplash.com/photo-1550009158-9ebf69173e03?q=80&w=800" },
   
   // Banner
   { id: 5, cat: "Banner", title: "Konser Musik Indie", img: "https://images.unsplash.com/photo-1459749411177-287ce146518c?q=80&w=800" },
   { id: 6, cat: "Banner", title: "Menu Best Seller", img: "https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=800" },
   { id: 7, cat: "Banner", title: "Grand Opening Toko", img: "https://images.unsplash.com/photo-1562564055-71e051d33c19?q=80&w=800" },
-  { id: 8, cat: "Banner", title: "Seminar Digital", img: "https://images.unsplash.com/photo-1544531586-fde5298cdd40?q=80&w=800" },
 
   // Livery
   { id: 9, cat: "Livery", title: "Bus Pariwisata Luxury", img: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?q=80&w=800" },
   { id: 10, cat: "Livery", title: "Mobil Operasional TV", img: "https://images.unsplash.com/photo-1617788138017-80ad40651399?q=80&w=800" },
   { id: 11, cat: "Livery", title: "Racing Decal Motor", img: "https://images.unsplash.com/photo-1558981403-c5f9899a28bc?q=80&w=800" },
-  { id: 12, cat: "Livery", title: "Truck Logistics", img: "https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?q=80&w=800" },
 ];
 
 const handleWA = (msg) => window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg || "Halo, saya mau konsultasi desain.")}`, '_blank');
 
-// --- COMPONENT: INTRO ANIMATION (Dipertahankan) ---
+// --- COMPONENT: INTRO ANIMATION ---
 const Intro = ({ onComplete }) => {
   return (
     <motion.div 
@@ -91,6 +98,7 @@ const Navbar = () => {
            <span className="font-extrabold text-xl text-brand-purple tracking-tighter">AV<span className="text-white">.</span></span>
            <div className="flex gap-6 text-sm font-medium text-gray-300">
              <a href="#about" className="hover:text-brand-purple transition-colors">About</a>
+             <a href="#skills" className="hover:text-brand-purple transition-colors">Tools</a>
              <a href="#services" className="hover:text-brand-purple transition-colors">Services</a>
              <a href="#gallery" className="hover:text-brand-purple transition-colors">Gallery</a>
            </div>
@@ -109,7 +117,7 @@ const Navbar = () => {
         {isOpen && (
           <motion.div initial={{x:"100%"}} animate={{x:0}} exit={{x:"100%"}} className="fixed inset-0 z-[60] bg-brand-dark flex flex-col items-center justify-center gap-8 text-white">
             <button onClick={() => setIsOpen(false)} className="absolute top-6 right-6 p-2 rounded-full bg-white/10"><X/></button>
-            {['Home','About','Services','Gallery','Contact'].map(item => (
+            {['Home','About','Skills','Services','Gallery','Contact'].map(item => (
               <a key={item} href={`#${item.toLowerCase()}`} onClick={() => setIsOpen(false)} className="text-3xl font-bold hover:text-brand-purple">{item}</a>
             ))}
           </motion.div>
@@ -154,7 +162,7 @@ const MainContent = () => {
            initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 3.2 }}
            className="max-w-xl mx-auto text-gray-400 text-lg mb-10 leading-relaxed"
          >
-            Membantu brand Anda tampil menonjol dengan desain grafis berkualitas tinggi. Spesialis Social Media, Banner, dan Livery.
+            Membantu brand Anda tampil menonjol dengan desain grafis berkualitas tinggi. Spesialis Social Media, Banner Promosi, dan Livery Kendaraan.
          </motion.p>
 
          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 3.4 }} className="flex gap-4">
@@ -167,7 +175,7 @@ const MainContent = () => {
          </motion.div>
       </section>
 
-      {/* --- ABOUT ME SECTION (NEW) --- */}
+      {/* --- ABOUT ME SECTION --- */}
       <section id="about" className="py-24 px-6 relative z-10">
          <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
             {/* Foto Profil */}
@@ -211,12 +219,46 @@ const MainContent = () => {
          </div>
       </section>
 
-      {/* --- SERVICES SECTION (3 MAIN SERVICES) --- */}
+      {/* --- TOOLS / ARSENAL SECTION (NEW!) --- */}
+      <section id="skills" className="py-24 px-6 relative z-10">
+         <div className="max-w-7xl mx-auto">
+            <div className="text-center mb-16">
+               <h2 className="text-brand-purple font-bold tracking-widest uppercase mb-2">My Arsenal</h2>
+               <h3 className="text-4xl md:text-5xl font-bold text-white">Aplikasi yang Saya Gunakan</h3>
+            </div>
+
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+               {TOOLS.map((tool, index) => (
+                  <motion.div 
+                    key={tool.id}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.1 }}
+                    whileHover={{ y: -5 }}
+                    className="glass-panel p-6 rounded-2xl flex flex-col items-center justify-center text-center group cursor-default"
+                  >
+                     {/* Square Icon imitating Adobe style */}
+                     <div 
+                        className="w-16 h-16 rounded-xl flex items-center justify-center text-2xl font-bold text-brand-dark mb-4 shadow-lg transition-transform group-hover:scale-110"
+                        style={{ backgroundColor: tool.color }}
+                     >
+                        {tool.code}
+                     </div>
+                     <h4 className="font-bold text-white mb-1">{tool.name}</h4>
+                     <p className="text-[10px] text-gray-400 uppercase tracking-wide">{tool.desc}</p>
+                  </motion.div>
+               ))}
+            </div>
+         </div>
+      </section>
+
+      {/* --- SERVICES SECTION --- */}
       <section id="services" className="py-24 px-6 relative z-10">
          <div className="max-w-7xl mx-auto">
             <div className="text-center mb-16">
                <h2 className="text-brand-purple font-bold tracking-widest uppercase mb-2">Services</h2>
-               <h3 className="text-4xl md:text-5xl font-bold">Apa yang Saya Kerjakan?</h3>
+               <h3 className="text-4xl md:text-5xl font-bold">Layanan Desain</h3>
             </div>
 
             <div className="grid md:grid-cols-3 gap-8">
@@ -226,7 +268,7 @@ const MainContent = () => {
                     initial={{ opacity: 0, y: 50 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: index * 0.2 }} // Staggered Animation
+                    transition={{ duration: 0.5, delay: index * 0.2 }} 
                     whileHover={{ y: -10 }}
                     className="glass-panel p-8 rounded-[2rem] hover:border-brand-purple/50 transition-all group"
                   >
@@ -244,8 +286,8 @@ const MainContent = () => {
          </div>
       </section>
 
-      {/* --- GALLERY SECTION (SMART TABS) --- */}
-      <section id="gallery" className="py-24 px-6 relative z-10 bg-brand-dark">
+      {/* --- GALLERY SECTION --- */}
+      <section id="gallery" className="py-24 px-6 relative z-10 bg-brand-dark/50 backdrop-blur-sm">
          <div className="max-w-7xl mx-auto text-center">
             <h2 className="text-4xl md:text-6xl font-bold mb-6">Gallery Karya</h2>
             <p className="text-gray-400 mb-12 max-w-2xl mx-auto">Berikut adalah beberapa hasil kerja terbaik saya. Gunakan filter di bawah untuk melihat kategori spesifik.</p>
@@ -267,7 +309,7 @@ const MainContent = () => {
                ))}
             </div>
 
-            {/* GRID LAYOUT (Responsive) */}
+            {/* GRID LAYOUT */}
             <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                <AnimatePresence mode='popLayout'>
                   {filteredPortfolio.map((item) => (
@@ -278,7 +320,7 @@ const MainContent = () => {
                         animate={{ opacity: 1, scale: 1 }}
                         exit={{ opacity: 0, scale: 0.9 }}
                         transition={{ duration: 0.3 }}
-                        className="group relative rounded-[2rem] overflow-hidden aspect-[4/3] border border-white/5 bg-brand-grey"
+                        className="group relative rounded-[2rem] overflow-hidden aspect-[4/3] border border-white/5 bg-white/5"
                      >
                         <img 
                            src={item.img} 
