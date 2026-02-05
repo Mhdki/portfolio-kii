@@ -1,51 +1,14 @@
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;800&family=Syne:wght@400;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  html.lenis { height: auto; }
-  .lenis.lenis-smooth { scroll-behavior: auto; }
-  .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
-  .lenis.lenis-stopped { overflow: hidden; }
-
-  body {
-    /* Background Abu-abu Sangat Gelap (Hampir Hitam) */
-    @apply bg-[#0A0A0A] text-[#E5E5E5] antialiased selection:bg-[#10B981] selection:text-white;
-    font-family: 'Manrope', sans-serif;
-    cursor: default;
-  }
-
-  h1, h2, h3, h4, h5 {
-    font-family: 'Syne', sans-serif; /* Font Judul yang Unik & Modern */
-  }
-
-  ::-webkit-scrollbar { width: 5px; }
-  ::-webkit-scrollbar-track { @apply bg-[#111]; }
-  ::-webkit-scrollbar-thumb { @apply bg-[#333] rounded-full; }
+body {
+  @apply bg-brand-white text-brand-dark font-sans overflow-x-hidden;
 }
 
-@layer utilities {
-  /* TEXTURE GRID HALUS DI BACKGROUND */
-  .bg-grid-pattern {
-    background-size: 40px 40px;
-    background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                      linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-    mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
-  }
-  
-  /* EFEK GLASS DARK */
-  .glass-dark {
-    @apply bg-[#151515]/80 backdrop-blur-xl border border-white/10;
-  }
-
-  /* TEXT HIJAU GRADASI HALUS */
-  .text-emerald-glow {
-    @apply text-transparent bg-clip-text bg-gradient-to-r from-[#10B981] to-[#059669];
-  }
-}
-
-@media (max-width: 768px) {
-  body { cursor: auto !important; }
-}
+/* Custom Scrollbar */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #1A1A2E; }
+::-webkit-scrollbar-thumb { background: #5D3FD3; border-radius: 4px; }
