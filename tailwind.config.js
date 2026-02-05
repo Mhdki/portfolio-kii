@@ -8,19 +8,21 @@ export default {
     extend: {
       fontFamily: {
         'sans': ['"Plus Jakarta Sans"', 'sans-serif'],
+        // Opsi font judul yang lebih tegas (opsional)
+        // 'display': ['"Syne"', 'sans-serif'], 
       },
       colors: {
-        'brand-purple': '#7F00FF', // Ungu Vibrant Utama
-        'light-grey': '#F3F4F6',   // Latar belakang terang
-        'medium-grey': '#E5E7EB',  // Border / Card terang
-        'dark-grey': '#1F2937',    // Latar belakang gelap (pengganti hitam)
-        'card-grey': '#374151',    // Warna kartu di latar gelap
-        'text-main': '#111827',    // Teks utama (hampir hitam)
-        'text-muted': '#6B7280',   // Teks abu-abu
+        'brand-purple': '#8A2EFF', // Ungu Neon
+        'brand-dark': '#0A0A0F',   // Latar belakang hampir hitam
+        'brand-grey': '#1A1A24',   // Abu gelap untuk section lain
+        'glass-border': 'rgba(255, 255, 255, 0.1)', // Border tipis untuk glass
       },
       backgroundImage: {
-        // Gradasi Ungu untuk elemen dekoratif
-        'gradient-purple': 'linear-gradient(135deg, #7F00FF 0%, #A855F7 100%)',
+        // Gradient untuk blob background
+        'gradient-radial-purple': 'radial-gradient(circle, rgba(138,46,255,0.4) 0%, rgba(0,0,0,0) 70%)',
+      },
+      animation: {
+        'pulse-slow': 'pulse 8s cubic-bezier(0.4, 0, 0.6, 1) infinite',
       }
     },
   },
