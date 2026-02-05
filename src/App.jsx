@@ -3,8 +3,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Layout, Image as ImageIcon, Truck, Menu, X, ArrowRight, Instagram, Dribbble, Linkedin, Send, User, Cpu, Layers, Monitor } from 'lucide-react';
 
 // --- CONFIG ---
-const WA_NUMBER = "6281234567890"; // GANTI NOMOR WA DISINI
-const EMAIL_ADDRESS = "emailkamu@gmail.com";
+const WA_NUMBER = "089502829097"; // GANTI NOMOR WA DISINI
+const EMAIL_ADDRESS = "reski03323@gmail.com";
 
 // --- DATA TOOLS / SOFTWARE (NEW FITUR) ---
 const TOOLS = [
@@ -12,8 +12,6 @@ const TOOLS = [
   { id: 2, name: "Illustrator", code: "Ai", color: "#FF9A00", desc: "Vektor & Logo Design" },
   { id: 3, name: "CorelDraw", code: "Cd", color: "#00E078", desc: "Layout Cetak & Livery" },
   { id: 4, name: "Figma", code: "Fi", color: "#A259FF", desc: "UI/UX & Prototyping" },
-  { id: 5, name: "VS Code", code: "Vs", color: "#23A7F2", desc: "Web Development" },
-  { id: 6, name: "Blender", code: "Bl", color: "#F5792A", desc: "3D Modeling & Mockup" },
 ];
 
 // --- DATA SERVICES ---
@@ -71,7 +69,7 @@ const Intro = ({ onComplete }) => {
           initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1 }}
           className="text-5xl md:text-8xl font-extrabold text-white tracking-tighter"
         >
-          ALEX <span className="text-brand-purple">VOSS</span>
+          MUHAMMAD <span className="text-brand-purple">RESKI</span>
         </motion.h1>
         <motion.div 
           initial={{ width: 0 }} animate={{ width: "100%" }} transition={{ duration: 1, delay: 0.5 }}
@@ -99,18 +97,18 @@ const Navbar = () => {
            <div className="flex gap-6 text-sm font-medium text-gray-300">
              <a href="#about" className="hover:text-brand-purple transition-colors">About</a>
              <a href="#skills" className="hover:text-brand-purple transition-colors">Tools</a>
-             <a href="#services" className="hover:text-brand-purple transition-colors">Services</a>
-             <a href="#gallery" className="hover:text-brand-purple transition-colors">Gallery</a>
+             <a href="#services" className="hover:text-brand-purple transition-colors">Layanan</a>
+             <a href="#gallery" className="hover:text-brand-purple transition-colors">Karya</a>
            </div>
            <button onClick={() => handleWA()} className="bg-brand-purple text-white px-5 py-2 rounded-full font-bold text-xs hover:shadow-[0_0_20px_rgba(138,46,255,0.6)] transition-all">
-             Hire Me
+             Hubungi Saya
            </button>
         </div>
       </motion.nav>
 
       {/* Mobile Nav */}
       <div className="md:hidden fixed top-0 left-0 right-0 z-50 glass-panel-dark p-4 flex justify-between items-center border-b border-white/10">
-         <span className="font-extrabold text-xl text-brand-purple">ALEX VOSS</span>
+         <span className="font-extrabold text-xl text-brand-purple">MUHAMMAD RESKI</span>
          <button onClick={() => setIsOpen(true)} className="p-2 text-white"><Menu size={24}/></button>
       </div>
       <AnimatePresence>
@@ -148,7 +146,7 @@ const MainContent = () => {
            initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 2.8 }}
            className="inline-block px-4 py-2 rounded-full border border-brand-purple/50 bg-brand-purple/10 mb-6"
          >
-            <span className="text-brand-purple font-bold text-xs uppercase tracking-widest">Available for Projects</span>
+            <span className="text-brand-purple font-bold text-xs uppercase tracking-widest">Tersedia Untuk Projects</span>
          </motion.div>
          
          <motion.h1 
@@ -204,10 +202,10 @@ const MainContent = () => {
                </h2>
                <div className="text-gray-400 space-y-4 text-lg leading-relaxed">
                  <p>
-                   Halo, saya Alex. Saya percaya bahwa desain yang baik bukan hanya tentang estetika, tapi tentang **komunikasi**. Setiap pixel yang saya buat bertujuan untuk menyampaikan pesan brand Anda dengan jelas.
+                   Halo, saya Reski. Saya percaya bahwa desain yang baik bukan hanya tentang estetika, tapi tentang **komunikasi**. Setiap pixel yang saya buat bertujuan untuk menyampaikan pesan brand Anda dengan jelas.
                  </p>
                  <p>
-                   Dengan pengalaman lebih dari 3 tahun, saya telah membantu berbagai UMKM dan perusahaan untuk meningkatkan visual branding mereka, mulai dari feed Instagram yang rapi hingga branding armada bus yang ikonik.
+                   Dengan pengalaman lebih dari 1 tahun, saya telah membantu berbagai UMKM dan perusahaan untuk meningkatkan visual branding mereka, mulai dari feed Instagram yang rapi hingga branding armada bus yang ikonik.
                  </p>
                </div>
                <div className="pt-6 flex gap-4">
@@ -357,7 +355,7 @@ const MainContent = () => {
                Chat WhatsApp Sekarang <ArrowRight/>
             </button>
          </div>
-         <p className="text-gray-600 text-sm mt-12">© 2026 Alex Voss Design. Padang, Indonesia.</p>
+         <p className="text-gray-600 text-sm mt-12">© 2026 Muhammad Reski Design. Padang, Indonesia.</p>
       </section>
 
     </div>
