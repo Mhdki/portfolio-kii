@@ -5,9 +5,11 @@
 @tailwind utilities;
 
 body {
-  @apply bg-white text-text-main font-sans overflow-x-hidden;
+  /* Menggunakan latar abu muda, teks utama gelap */
+  @apply bg-light-grey text-text-main font-sans overflow-x-hidden;
 }
 
-/* Scrollbar biar rapi */
+/* Scrollbar Ungu */
 ::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-thumb { background: #FF4D80; border-radius: 10px; }
+::-webkit-scrollbar-thumb { background: #7F00FF; border-radius: 10px; }
+::-webkit-scrollbar-track { background: #E5E7EB; }
