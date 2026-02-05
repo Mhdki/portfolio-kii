@@ -7,16 +7,27 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        'sans': ['"Plus Jakarta Sans"', 'sans-serif'], // Font modern mirip desain
+        'sans': ['"Plus Jakarta Sans"', 'sans-serif'],
+        'display': ['"Plus Jakarta Sans"', 'sans-serif'], // Pakai font modern yang sama
       },
       colors: {
-        'brand-purple': '#5D3FD3', // Ungu utama
-        'brand-dark': '#1A1A2E',   // Ungu gelap untuk background
-        'brand-lime': '#CCF381',   // Hijau stabilo (Lime)
+        'brand-purple': '#5D3FD3', 
+        'brand-dark': '#0F0F1A',   // Lebih gelap dikit biar pop
+        'brand-lime': '#CCF381',   
         'brand-white': '#F8F9FA',
       },
+      animation: {
+        'spin-slow': 'spin 10s linear infinite',
+        'float': 'float 6s ease-in-out infinite',
+      },
+      keyframes: {
+        float: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-20px)' },
+        }
+      },
       backgroundImage: {
-        'pattern': "url('https://www.transparenttextures.com/patterns/cubes.png')",
+        'noise': "url('https://grainy-gradients.vercel.app/noise.svg')",
       }
     },
   },
